@@ -6,6 +6,8 @@ import {
   publicProcedure,
 } from "~/server/api/trpc";
 
+import wordsList from "./words.json";
+
 export const postRouter = createTRPCRouter({
   hello: publicProcedure
     .input(z.object({ text: z.string() }))
@@ -35,6 +37,14 @@ export const postRouter = createTRPCRouter({
       where: { createdBy: { id: ctx.session.user.id } },
     });
   }),
+
+  getWord: publicProcedure
+    .input(z.object({ index: z.number() }))
+    .query(({ input }) => {
+      const randomWord = wordsList[input.index];
+      console.log(randomWord);
+      return randomWord;
+    }),
 
   getSecretMessage: protectedProcedure.query(() => {
     return "you can now see this secret message!";
