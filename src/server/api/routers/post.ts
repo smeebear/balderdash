@@ -42,7 +42,7 @@ export const postRouter = createTRPCRouter({
     .input(z.object({ index: z.number() }))
     .query(({ input }) => {
       const randomWord = wordsList[input.index];
-      console.log(randomWord);
+      // console.log(randomWord);
       return randomWord;
     }),
 
